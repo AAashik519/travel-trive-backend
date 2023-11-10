@@ -1,24 +1,17 @@
-const express = require('express')
-const cors =require('cors')
-const app = express()
-const port =process.env.PORT ||  5000
+const express = require("express");
+const cors = require("cors");
+const app = express();
+const dotenv = require("dotenv");
+const PORT = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const dotenv = require('dotenv') 
 
 
-// const corsOptions = {
-//   origin: '---',
-//   credentials: true,
-// }
 // middleware 
-dotenv.config();
+app.use(cors())
 app.use(express.json());
-app.use(cors());
-
-
-
-
-
+dotenv.config();
+ 
+ 
  
 const uri = `mongodb+srv://${process.env.DB_User}:${process.env.DB_Pass}@cluster0.o1ht6xv.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -58,11 +51,11 @@ async function run() {
         const bookings = req.body
         const result = await bookingCollection.insertOne(bookings)
          res.send(result)
-         console.log(result);
+        //  console.log(result);
     })
 
     app.get('/bookings', async(req,res)=>{
-        console.log(req.query.email);
+        // console.log(req.query.email);
 
         let query = {}
   
@@ -97,6 +90,6 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`)
 })
